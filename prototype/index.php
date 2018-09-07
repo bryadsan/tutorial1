@@ -18,7 +18,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>PHP Tutorial - Basic1</title>
+    <title>PHP Tutorial - Basic 2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../assets/datatables/datatables.min.css" />
