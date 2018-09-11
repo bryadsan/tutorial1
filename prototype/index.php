@@ -1,4 +1,5 @@
 <?php 
+    require("database/config.php");
     $_page = (!empty($_GET['page'])) ? strtolower($_GET['page']) : 'home' ;
 
     $_allowed_pages = ['home', 'blogs', 'users'];
@@ -47,6 +48,7 @@
 
         include_once('elements/footer.php');
 
+        include_once('elements/modal.php'); 
     ?>
 </div>
 

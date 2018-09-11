@@ -1,3 +1,21 @@
+<?php
+
+if (!empty ($_POST)) {
+$sql = "INSERT INTO users (username, password, first_name, last_name, email, mobile)
+VALUES ('".$_POST['username']."', '".$_POST['password']."', '".$_POST['first_name']."', '".$_POST['last_name']."', '".$_POST['email']."', '".$_POST['mobile']."')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+}
+$sql = "SELECT ID, username, password, first_name, last_name, email, mobile, created FROM users";
+$result = $conn->query($sql);
+
+//print_r($result);
+?>
+
 <main role="main" class="container mt-4">
             <div class="row">
                 <div class="col-md-12 blog-main">
@@ -21,66 +39,35 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while($row = $result->fetch_assoc()) {
+                                //echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+                              
+                           
+                            ?>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>userone</td>
-                                    <td>User One</td>
-                                    <td>userone@mail.com</td>
-                                    <td>11 1111 111</td>
-                                    <td>2018-08-15</td>
+                                    <td><?php echo $row["ID"]?></td>
+                                    <td><?php echo $row["username"]?></td>
+                                    <td><?php echo $row["first_name"] . " " . $row["last_name"]?></td>
+                                    <td><?php echo $row["email"]?></td>
+                                    <td><?php echo $row["mobile"]?></td>
+                                    <td><?php echo $row["created"]?></td>
                                     <td>
                                         <a class="btn btn-sm btn-outline-success" href="#">Edit</a>
                                         <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
                                     </td>
+
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>usertwo</td>
-                                    <td>User Two</td>
-                                    <td>usertwo@mail.com</td>
-                                    <td>22 222 2222</td>
-                                    <td>2018-12-02</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-outline-success" href="#">Edit</a>
-                                        <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>userthree</td>
-                                    <td>User Three</td>
-                                    <td>userthree@mail.com</td>
-                                    <td>33 333 3333</td>
-                                    <td>2018-03-15</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-outline-success" href="#">Edit</a>
-                                        <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">4</th>
-                                    <td>userfour</td>
-                                    <td>User Four</td>
-                                    <td>userfour@mail.com</td>
-                                    <td>44 444 4444</td>
-                                    <td>2018-01-25</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-outline-success" href="#">Edit</a>
-                                        <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">5</th>
-                                    <td>userfive</td>
-                                    <td>User Five</td>
-                                    <td>userfive@mail.com</td>
-                                    <td>55 555 5555</td>
-                                    <td>2018-05-11</td>
-                                    <td>
-                                        <a class="btn btn-sm btn-outline-success" href="#">Edit</a>
-                                        <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
-                                    </td>
-                                </tr>
+
+                              <?php
+                               }
+                               } else {
+                                echo "0 results";
+                            }
+                            $conn->close();
+                              ?> 
                             </tbody>
                         </table>
                     </div>
