@@ -29,8 +29,7 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="AddBlogModal" tabindex="-1" role="dialog" aria-labelledby="AddBlogModalLabel" aria-hidden="true">
+     <div class="modal fade" id="AddBlogModal" tabindex="-1" role="dialog" aria-labelledby="AddBlogModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form method="post" action="#">
@@ -41,7 +40,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-
+                        <input type="hidden" name="id" value="">
                         <div class="form-group">
                             <label for="title-name" class="col-form-label">Title:</label>
                             <input type="text" required name="title" class="form-control">
@@ -59,12 +58,11 @@
                 </form>
             </div>
         </div>
-    </div>
-
-    <div class="modal fade" id="AddUserModal" tabindex="-1" role="dialog" aria-labelledby="AddUserModalLabel" aria-hidden="true">
+</div>
+       <div class="modal fade" id="AddUserModal" tabindex="-1" role="dialog" aria-labelledby="AddUserModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="post" action="#">
+                <form method="post" action="">
                     <div class="modal-header">
                         <h5 class="modal-title" id="AddUserModalLabel">New User</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -72,7 +70,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-
+                        <input type="hidden" name="id" value="">
                         <div class="form-group">
                             <label for="title-name" class="col-form-label">Username:</label>
                             <input type="text" required name="username" class="form-control">

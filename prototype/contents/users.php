@@ -1,20 +1,60 @@
 <?php
+$message = "";
+$sql = "";
 
-if (!empty ($_POST)) {
-$sql = "INSERT INTO users (username, password, first_name, last_name, email, mobile)
-VALUES ('".$_POST['username']."', '".$_POST['password']."', '".$_POST['first_name']."', '".$_POST['last_name']."', '".$_POST['email']."', '".$_POST['mobile']."')";
-
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+if(!empty($_GET['action']) && !empty($_GET['id'])){
+    $sql = "DELETE FROM users WHERE id=" . $_GET['id'];
+    $message = "Record has been deleted successfully";
 }
-}
-$sql = "SELECT ID, username, password, first_name, last_name, email, mobile, created FROM users";
-$result = $conn->query($sql);
 
-//print_r($result);
+if(!empty($_POST)){
+    if(!empty($_POST['id']))
+    {
+        $sql = "UPDATE users SET username='" .$_POST['username']. "', 
+                                first_name = '" .$_POST['first_name']. "',
+                                 last_name = '" .$_POST['last_name']. "', 
+                                 email = '" .$_POST['email'] . "'  ,
+                                 mobile = '" .$_POST['mobile']. "'
+
+                                 WHERE id= ".$_POST['id'];
+                                 $message = "record has been updated";
+
+    }
+    else{
+    $sql = "INSERT INTO users(username, password, first_name, last_name, email, mobile) 
+            VALUES ('" .$_POST['username'] . "',
+                    '" .$_POST['password'] . "',
+                    '" .$_POST['first_name']. "',
+                    '" .$_POST['last_name'] . "',
+                    '" .$_POST['email'] . "',
+                    '" .$_POST['mobile'] ."')";
+
+    $message = "New record created successfully";
+    }
+}
+
+if ( !empty($sql) ) {
+    if ($conn->query($sql) === TRUE) {
+        echo $message;
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
 ?>
+
+<?php $sql = "SELECT * FROM users"; 
+    $result = $conn->query($sql);
+    print_r($result);
+    // if ($result->num_rows > 0) {
+    //     // output data of each row
+    //     while($row = $result->fetch_assoc()) {
+    //         echo "<br> id: ". $row["ID"];
+    //     }
+    // } else {
+    //     echo "0 results";
+    // }
+?>
+
 
 <main role="main" class="container mt-4">
             <div class="row">
@@ -39,35 +79,45 @@ $result = $conn->query($sql);
                                 </tr>
                             </thead>
                             <tbody>
+
                             <?php
-                            if ($result->num_rows > 0) {
+                             if ($result->num_rows > 0) {
                                 // output data of each row
+                             
+
                                 while($row = $result->fetch_assoc()) {
-                                //echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-                              
-                           
+                                    
+                                
                             ?>
-                                <tr>
-                                    <td><?php echo $row["ID"]?></td>
+                               <tr>
+                                    <th scope="row"><?php echo $row["ID"]?></th>
                                     <td><?php echo $row["username"]?></td>
-                                    <td><?php echo $row["first_name"] . " " . $row["last_name"]?></td>
+                                    <td><?php echo $row["first_name"]." ". $row["last_name"]?></td>
                                     <td><?php echo $row["email"]?></td>
                                     <td><?php echo $row["mobile"]?></td>
                                     <td><?php echo $row["created"]?></td>
                                     <td>
-                                        <a class="btn btn-sm btn-outline-success" href="#">Edit</a>
-                                        <a class="btn btn-sm btn-outline-danger" href="#">Delete</a>
+                                        <a 
+                                            class="btn btn-sm btn-outline-success" 
+                                            data-toggle="modal" 
+                                            data-target="#AddUserModal" 
+                                            data-username="<?php echo $row["username"]?>"
+                                            data-first_name="<?php echo $row["first_name"]?>"
+                                            data-last_name="<?php echo $row["last_name"]?>"
+                                            data-email="<?php echo $row["email"]?>"
+                                            data-mobile="<?php echo $row["mobile"]?>"
+                                            data-id="<?php echo $row["ID"]?>"
+                                            href="#"
+                                        >Edit</a>
+                                        <a class="btn btn-sm btn-outline-danger" href="?page=users&action=delete&id=<?php echo $row["ID"]?>">Delete</a>
                                     </td>
-
                                 </tr>
 
-                              <?php
-                               }
-                               } else {
-                                echo "0 results";
-                            }
-                            $conn->close();
-                              ?> 
+                            <?php } 
+                            } 
+                            ?>
+
+
                             </tbody>
                         </table>
                     </div>
